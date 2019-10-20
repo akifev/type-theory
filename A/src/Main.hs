@@ -6,5 +6,4 @@ import Grammar
 main :: IO ()
 main = do
     input <- getContents
-    let str =  unlines $ lines input
-    putStrLn (show (parser (alexScanTokens str)))
+    putStrLn $ show $ parser $ alexScanTokens input

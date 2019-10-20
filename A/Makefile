@@ -15,6 +15,7 @@ clean:
 	rm -rf src/*.o src/*.hi
 	rm -rf $(GENERATED)
 	rm -f parser
+	rm -f parser.exe
 	rm -Rf $(PACKAGE)
 
 parser: $(GENERATED) $(SOURCES)
