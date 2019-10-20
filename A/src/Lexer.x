@@ -5,15 +5,14 @@ module Lexer where
 %wrapper "basic"
 
 $digit = 0-9
-$alpha = [a-zA-Z]
+$alpha = [a-z]
 
 tokens :-
 
     $white                                  ;
-    [\|\&\!\(\)]                            { \s -> TSym (head s)}
-    "->"                                    { \s -> TImpl }
+    [\\\.\(\)]                              { \s -> TSym (head s)}
     $alpha [$alpha $digit \` \’ \']*        { \s -> TVar s }
 
 {
-data Token = TSym Char | TImpl | TVar String deriving (Eq, Show)
+data Token = TSym Char | TVar String deriving (Eq, Show)
 }

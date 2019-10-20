@@ -5,5 +5,6 @@ import Grammar
 
 main :: IO ()
 main = do
-    str <- getLine
-    putStrLn (show (parser (alexScanTokens str)))
+    input <- getLine
+    -- putStrLn input
+    putStrLn (show (parser (alexScanTokens input)))

@@ -9,32 +9,26 @@ import Grammar
 %error { parseError }
 
 %token
-    or                                      { TSym '|' }
-    and                                     { TSym '&' }
-    not                                     { TSym '!' }
     open                                    { TSym '(' }
     close                                   { TSym ')' }
-    impl                                    { TImpl }
+    lambda                                  { TSym '\\' }
+    point                                   { TSym '.' }
     var                                     { TVar $$ }
 
 %%
 
 Expression:
-    Disjunction                             { Disjunction $1 }
-    |   Disjunction impl Expression         { Impl $1 $3 }
+    Space lambda var point Expression       { Lambda $1 $3 $5 }
+    | lambda var point Expression           { Lambda [] $2 $4 }
+    | Space                                 { Space (reverse $1) }
 
-Disjunction:
-    Conjunction                             { Conjunction $1 }
-    |   Disjunction or Conjunction          { Or $1 $3 }
+Space:
+    Space Atom                              { $2 : $1 }
+    |   Atom                                { $1 : [] }
 
-Conjunction:
-    Negation                                { Negation $1 }
-    |   Conjunction and Negation            { And $1 $3 }
-
-Negation:
-    not Negation                            { Not $2 }
-    |   var                                 { Variable $1 }
-    |   open Expression close               { Brackets $2 }
+Atom:
+    open Expression close                   { Atom $2 }
+    |   var                                 { Var $1 }
 
 {
 parseError _ = error "Parse error"
