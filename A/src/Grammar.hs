@@ -1,12 +1,10 @@
 module Grammar where
 
-data Expression = ApplyingLambda { getApplying :: Expression, getLambda :: Expression }
-                | Lambda { getVariableName :: String, getExpression :: Expression }
-                | Applying { getApplying :: Expression, getAtom :: Expression }
-                | Variable { getVariableName :: String }
+data Expr = Var String
+          | Abs String Expr
+          | App Expr Expr
 
-instance Show Expression where
-  show (ApplyingLambda applying lambda) = "(" ++ (show applying) ++ " " ++ (show lambda) ++ ")"
-  show (Lambda variableName expression) = "(\\" ++ variableName ++ "." ++ (show expression) ++ ")"
-  show (Applying applying atom) = "(" ++ (show applying) ++ " " ++ (show atom) ++ ")"
-  show (Variable variableName) = variableName
+instance Show Expr where
+  show (Var var) = var
+  show (Abs var expr) = "(\\" ++ var ++ "." ++ (show expr) ++ ")"
+  show (App left right) = "(" ++ (show left) ++ " " ++ (show right) ++ ")"
