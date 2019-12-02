@@ -18,17 +18,17 @@ import Grammar
 %%
 
 Expression:
-    Applying lambda var point Expression    { ApplyingLambda $1 (Lambda $3 $5) }
-    |   lambda var point Expression         { Lambda $2 $4 }
+    Applying lambda var point Expression    { App $1 (Abs $3 $5) }
+    |   lambda var point Expression         { Abs $2 $4 }
     |   Applying                            { $1 }
 
 Applying:
-    Applying Atom                           { Applying $1 $2 }
+    Applying Atom                           { App $1 $2 }
     |   Atom                                { $1 }
 
 Atom:
     open Expression close                   { $2 }
-    |   var                                 { Variable $1 }
+    |   var                                 { Var $1 }
 
 {
 parseError _ = error "Parse error"
