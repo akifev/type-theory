@@ -1,4 +1,4 @@
-﻿﻿# type-theory
+# type-theory
 ## Description
 There are my [solutions](#solutions) of problems from course of type theory in ITMO, 2019 <br/>
 
